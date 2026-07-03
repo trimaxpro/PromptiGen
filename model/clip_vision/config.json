@@ -1,0 +1,35 @@
+{
+  "_name_or_path": "laion/CLIP-ViT-H-14-laion2B-s32B-b79K",
+  "architectures": ["CLIPModel"],
+  "model_type": "clip",
+  "projection_dim": 1024,
+  "vision_config": {
+    "hidden_size": 1280,
+    "num_hidden_layers": 32,
+    "num_attention_heads": 16,
+    "intermediate_size": 5120,
+    "image_size": 224,
+    "patch_size": 14,
+    "layer_norm_eps": 1e-5,
+    "dropout": 0.0,
+    "attention_dropout": 0.0,
+    "initializer_range": 0.02,
+    "initializer_factor": 1.0
+  },
+  "text_config": {
+    "hidden_size": 1024,
+    "num_hidden_layers": 24,
+    "num_attention_heads": 16,
+    "intermediate_size": 4096,
+    "vocab_size": 49408,
+    "max_position_embeddings": 77,
+    "layer_norm_eps": 1e-5,
+    "dropout": 0.0,
+    "attention_dropout": 0.0,
+    "initializer_range": 0.02,
+    "initializer_factor": 1.0,
+    "eos_token_id": 2,
+    "bos_token_id": 1,
+    "pad_token_id": 1
+  }
+}

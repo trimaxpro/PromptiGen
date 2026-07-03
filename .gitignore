@@ -1,0 +1,20 @@
+__pycache__/
+*.pyc
+*.pyo
+gradio_output.txt
+nul
+.DS_Store
+
+# User config (contains API key) — only root level
+/config.json
+
+# Virtual environment
+venv/
+
+# Large model files (downloaded by install.bat)
+model/clip_vision/model.safetensors
+model/wd-v1-4-convnext-tagger-v2/model.onnx
+model/wd-v1-4-convnext-tagger-v2/selected_tags.csv
+
+# Test files
+test.png
