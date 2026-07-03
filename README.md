@@ -2,7 +2,8 @@
 
 **Local AI Prompt Generator** — A high-performance, fully offline desktop application designed for AI image tagging, analysis, and automated Stable Diffusion prompt engineering.
 
-PromptiGen runs local neural network models to scan illustration/anime images and generate ready-to-use Stable Diffusion prompts. By combining **WD v1.4 ConvNeXt Tagger v2** (Danbooru tags) with zero-shot **CLIP-ViT-H-14** vision models (detecting art style, mood, composition, lighting, and textures) and optional **OpenRouter** AI model optimization, it helps you construct high-quality, professional prompts automatically from visual inputs.
+### Description
+PromptiGen allows you to easily generate descriptive tags and optimized prompts directly from your images. By running local deep learning vision models, the application performs multi-label image tagging alongside zero-shot vision classification to analyze art styles, lighting settings, composition, mood, and fine details. It combines these outputs with optional cloud-based LLM enhancement to automatically construct rich, professional-grade prompts for text-to-image generation models without needing any manual tagging.
 
 ---
 
