@@ -378,23 +378,32 @@ class CLIPTagger:
         print(f"CLIP_MODEL:LOADING:{self.device}", flush=True)
 
         try:
-            LOG.info("Loading CLIP from %s", fast_id)
-            self.clip_processor = CLIPProcessor.from_pretrained(fast_id, local_files_only=True)
+            LOG.info("Loading local CLIP model from %s", CLIP_VISION_DIR)
+            self.clip_processor = CLIPProcessor.from_pretrained(large_id)
             self.clip_model = CLIPModel.from_pretrained(
-                fast_id, torch_dtype=self.dtype, local_files_only=True,
+                str(CLIP_VISION_DIR), torch_dtype=self.dtype
             ).to(self.device)
-        except Exception:
-            LOG.warning("Local cache miss for %s, trying download", fast_id)
+            LOG.info("Successfully loaded local CLIP model.")
+        except Exception as e:
+            LOG.warning("Local load failed (%s), falling back to online/cache", e)
             try:
-                self.clip_processor = CLIPProcessor.from_pretrained(fast_id)
+                LOG.info("Loading CLIP from %s", fast_id)
+                self.clip_processor = CLIPProcessor.from_pretrained(fast_id, local_files_only=True)
                 self.clip_model = CLIPModel.from_pretrained(
-                    fast_id, torch_dtype=self.dtype,
+                    fast_id, torch_dtype=self.dtype, local_files_only=True,
                 ).to(self.device)
             except Exception:
-                self.clip_processor = CLIPProcessor.from_pretrained(large_id)
-                self.clip_model = CLIPModel.from_pretrained(
-                    large_id, torch_dtype=self.dtype,
-                ).to(self.device)
+                LOG.warning("Local cache miss for %s, trying download", fast_id)
+                try:
+                    self.clip_processor = CLIPProcessor.from_pretrained(fast_id)
+                    self.clip_model = CLIPModel.from_pretrained(
+                        fast_id, torch_dtype=self.dtype,
+                    ).to(self.device)
+                except Exception:
+                    self.clip_processor = CLIPProcessor.from_pretrained(large_id)
+                    self.clip_model = CLIPModel.from_pretrained(
+                        large_id, torch_dtype=self.dtype,
+                    ).to(self.device)
         self.clip_model.eval()
         print("CLIP_MODEL:CLIP_READY", flush=True)
 

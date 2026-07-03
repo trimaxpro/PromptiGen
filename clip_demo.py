@@ -43,14 +43,20 @@ LABELS = [
 
 
 def load_model():
-    """Load CLIP-ViT-H-14 from HuggingFace (full model with text encoder)."""
+    """Load CLIP-ViT-H-14 from local cache if available, else from HuggingFace."""
     device = "cuda" if torch.cuda.is_available() else "cpu"
     dtype = torch.float16 if device == "cuda" else torch.float32
 
     model_id = "laion/CLIP-ViT-H-14-laion2B-s32B-b79K"
-    print(f"Loading {model_id} ...")
-    processor = CLIPProcessor.from_pretrained(model_id)
-    model = CLIPModel.from_pretrained(model_id, torch_dtype=dtype)
+    try:
+        print(f"Loading local CLIP model from {LOCAL_MODEL_DIR} ...")
+        processor = CLIPProcessor.from_pretrained(model_id)
+        model = CLIPModel.from_pretrained(str(LOCAL_MODEL_DIR), torch_dtype=dtype)
+    except Exception as e:
+        print(f"Local load failed ({e}). Loading online {model_id} ...")
+        processor = CLIPProcessor.from_pretrained(model_id)
+        model = CLIPModel.from_pretrained(model_id, torch_dtype=dtype)
+        
     model = model.to(device).eval()
     print(f"Model loaded on {device} ({dtype})")
     return model, processor, device
